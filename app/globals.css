@@ -1,26 +1,429 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+  --color-gold: #c8902d;
+  --color-navy: #1a1a2e;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gold: #c8902d;
+    --gold-light: #e0aa52;
+    --gold-dark: #9e6f1e;
+    --navy: #1a1a2e;
+    --navy-light: #222244;
+    --dark: #333333;
+    --light-bg: #f8f8f8;
+    --font-inter: "Inter", sans-serif;
+    --font-playfair: "Playfair Display", serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: var(--font-inter);
+    color: var(--dark);
+    overflow-x: hidden;
+    background: #fff;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* ── Section Heading ── */
+  .skew-head {
+    @apply text-center py-3 relative;
+    font-family: var(--font-playfair);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .skew-head span {
+    @apply relative inline-block px-8 py-2 text-white;
+    background: var(--gold);
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  }
+
+  .head-line {
+    @apply mx-auto mb-8;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 2px;
+  }
+
+  /* ── Section Base ── */
+  .section-base {
+    @apply py-16 px-4;
+  }
+
+  /* ── Gold Button ── */
+  .btn-gold {
+    @apply inline-block px-6 py-3 font-semibold text-white rounded transition-all duration-300;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border: 2px solid transparent;
+    letter-spacing: 0.04em;
+    font-size: 0.85rem;
+  }
+
+  .btn-gold:hover {
+    background: transparent;
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ── Outline Gold Button ── */
+  .btn-outline-gold {
+    @apply inline-block px-6 py-3 font-semibold rounded transition-all duration-300;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+  }
+
+  .btn-outline-gold:hover {
+    background: var(--gold);
+    color: #fff;
+  }
+
+  /* ── Form Field ── */
+  .form-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded outline-none transition-all duration-200;
+    font-family: var(--font-inter);
+    font-size: 0.95rem;
+  }
+
+  .form-field:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200, 144, 45, 0.15);
+  }
+
+  /* ── USP Card ── */
+  .usp-card {
+    @apply flex items-start gap-3 p-4 rounded-xl transition-all duration-300 cursor-default;
+    border: 1px solid rgba(200, 144, 45, 0.15);
+  }
+
+  .usp-card:hover {
+    background: rgba(200, 144, 45, 0.05);
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(200, 144, 45, 0.12);
+  }
+
+  /* ── Location Key Item ── */
+  .loc-item {
+    @apply flex items-center gap-3 py-3 px-4 rounded-lg mb-2 transition-all duration-200;
+    border-left: 3px solid var(--gold);
+    background: rgba(200, 144, 45, 0.04);
+  }
+
+  .loc-item:hover {
+    background: rgba(200, 144, 45, 0.10);
+    transform: translateX(4px);
+  }
+
+  /* ── Gallery Tab ── */
+  .gallery-tab {
+    @apply px-6 py-3 font-semibold transition-all duration-200 border-b-2 border-transparent;
+    color: #666;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+  }
+
+  .gallery-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  .gallery-tab:hover:not(.active) {
+    color: var(--dark);
+    border-bottom-color: #ddd;
+  }
+
+  /* ── Gallery Image Card ── */
+  .gallery-card {
+    @apply relative overflow-hidden rounded-xl cursor-pointer;
+  }
+
+  .gallery-card::after {
+    content: "🔍";
+    @apply absolute inset-0 flex items-center justify-center text-4xl text-white opacity-0 transition-all duration-300;
+    background: rgba(26, 26, 46, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-card:hover::after {
+    opacity: 1;
+  }
+
+  .gallery-card img {
+    @apply w-full transition-transform duration-500;
+  }
+
+  .gallery-card:hover img {
+    transform: scale(1.07);
+  }
+
+  /* ── Floor Card ── */
+  .floor-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .floor-card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 2rem;
+    color: white;
+    opacity: 0;
+    transition: all 0.3s;
+    background: linear-gradient(to top, rgba(26,26,46,0.85), transparent);
+  }
+
+  .floor-card:hover .floor-card-overlay {
+    opacity: 1;
+  }
+
+  /* ── Modal Base ── */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease;
+  }
+
+  .modal-box {
+    @apply bg-white rounded-2xl w-full max-w-md shadow-2xl;
+    animation: slideUp 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    @apply flex items-center justify-between px-6 py-4;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  }
+
+  /* ── Amenity Card ── */
+  .amenity-slide {
+    @apply relative overflow-hidden rounded-2xl cursor-pointer;
+  }
+
+  .amenity-slide img {
+    @apply w-full h-64 object-cover transition-transform duration-500;
+  }
+
+  .amenity-slide:hover img {
+    transform: scale(1.05);
+  }
+
+  /* ── Navbar link ── */
+  .nav-link {
+    @apply relative text-sm font-medium transition-colors duration-200;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-link::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300;
+    background: var(--gold);
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* ── Floating scroll-reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-zoom {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal-zoom.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@utility font-playfair {
+  font-family: var(--font-playfair);
+}
+
+@utility font-inter {
+  font-family: var(--font-inter);
+}
+
+@utility text-gold {
+  color: var(--gold);
+}
+
+@utility bg-gold {
+  background: var(--gold);
+}
+
+@utility bg-navy {
+  background: var(--navy);
+}
+
+@utility border-gold {
+  border-color: var(--gold);
+}
+
+@utility gradient-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+}
+
+@utility bg-light-bg {
+  background: var(--light-bg);
+}
+
+@utility text-dark {
+  color: var(--dark);
+}
+
+/* ── Animations ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceLogo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,144,45,0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(200,144,45,0); }
+}
+
+.animate-bounce-logo {
+  animation: bounceLogo 1.2s ease-in-out infinite;
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+/* ── Side Drawer ── */
+.side-drawer {
+  @apply fixed top-0 right-0 h-full w-72 z-50 flex flex-col py-8 px-6;
+  background: var(--navy);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -8px 0 30px rgba(0,0,0,0.3);
+}
+
+.side-drawer.open {
+  transform: translateX(0);
+}
+
+/* ── Carousel ── */
+.carousel-container {
+  @apply relative overflow-hidden;
+}
+
+.carousel-track {
+  @apply flex transition-transform duration-700 ease-in-out;
+}
+
+.carousel-slide {
+  @apply flex-none w-full;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+/* ── No horizontal scroll ── */
+@media (max-width: 768px) {
+  .overflow-x-hidden-mobile {
+    overflow-x: hidden !important;
+  }
 }
