@@ -14,7 +14,7 @@ import AboutSunteck from "@/components/AboutSunteck";
 import MapSection from "@/components/MapSection";
 import ContactSection from "@/components/ContactSection";
 import Footer, { DisclaimerStrip } from "@/components/Footer";
-import { MobileStickyBar, FloatingSideButton } from "@/components/CTABars";
+import { MobileStickyBar, FloatingSideButton, BrochureSideButton } from "@/components/CTABars";
 import {
   EnquireModal,
   PriceModal,
@@ -99,6 +99,7 @@ export default function Home() {
 
       {/* Floating CTAs */}
       <MobileStickyBar onEnquire={() => setEnquireOpen(true)} />
+      <BrochureSideButton onBrochure={() => setBrochureOpen(true)} />
       <FloatingSideButton />
     </>
   );

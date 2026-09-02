@@ -1,5 +1,5 @@
 "use client";
-import { FaPhone, FaEnvelope } from "react-icons/fa";
+import { FaPhone, FaEnvelope, FaDownload } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 
 export function MobileStickyBar({ onEnquire }) {
@@ -31,8 +31,28 @@ export function MobileStickyBar({ onEnquire }) {
   );
 }
 
+export function BrochureSideButton({ onBrochure }) {
+  return (
+    <button
+      onClick={onBrochure}
+      className="hidden md:flex fixed right-0 top-1/2 z-30 items-center justify-center gap-2 text-white text-xs font-semibold tracking-wide px-4 py-2 rounded-l-lg shadow-lg"
+      style={{
+        background: "var(--gold)",
+        transform: "translateY(-50%) translateX(calc(100% - 36px)) rotate(90deg)",
+        transformOrigin: "left center",
+        writingMode: "horizontal-tb",
+        width: "160px",
+      }}
+      aria-label="Download brochure"
+    >
+      <FaDownload size={12} />
+      Download Brochure
+    </button>
+  );
+}
+
 export function FloatingSideButton() {
-  const whatsappNumber = "917276622755";
+  const whatsappNumber = "919026784051";
   const whatsappMessage = encodeURIComponent(
     "Hello! I am interested in Sunteck OneWorld. Please share more details."
   );
