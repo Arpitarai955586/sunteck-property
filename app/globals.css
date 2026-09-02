@@ -162,19 +162,6 @@
     @apply relative overflow-hidden rounded-xl cursor-pointer;
   }
 
-  .gallery-card::after {
-    content: "🔍";
-    @apply absolute inset-0 flex items-center justify-center text-4xl text-white opacity-0 transition-all duration-300;
-    background: rgba(26, 26, 46, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .gallery-card:hover::after {
-    opacity: 1;
-  }
-
   .gallery-card img {
     @apply w-full transition-transform duration-500;
   }

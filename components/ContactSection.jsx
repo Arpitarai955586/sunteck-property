@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { FaMapMarkerAlt, FaPhone, FaWhatsapp, FaCheckCircle, FaEnvelope, FaExclamationTriangle } from "react-icons/fa";
 
 export default function ContactSection({ onEnquire }) {
   const sectionRef = useRef(null);
   const [form, setForm] = useState({ name: "", mobile: "", email: "", consent: true });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,12 +36,36 @@ export default function ContactSection({ onEnquire }) {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setErrors({});
-    setSubmitted(true);
+    setApiError("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          mobile: form.mobile,
+          email: form.email,
+          source: "Contact Section",
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setApiError(data.error || "Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setApiError("Network error. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (field, value) => {
@@ -82,7 +109,7 @@ export default function ContactSection({ onEnquire }) {
             <div className="space-y-5">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-gold shrink-0 mt-0.5">
-                  📍
+                  <FaMapMarkerAlt size={16} />
                 </div>
                 <div>
                   <p className="text-gold font-semibold text-sm mb-1">Address</p>
@@ -95,7 +122,7 @@ export default function ContactSection({ onEnquire }) {
 
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-gold shrink-0 mt-0.5">
-                  📞
+                  <FaPhone size={16} />
                 </div>
                 <div>
                   <p className="text-gold font-semibold text-sm mb-1">Phone</p>
@@ -107,7 +134,7 @@ export default function ContactSection({ onEnquire }) {
 
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center text-gold shrink-0 mt-0.5">
-                  💬
+                  <FaWhatsapp size={18} />
                 </div>
                 <div>
                   <p className="text-gold font-semibold text-sm mb-1">WhatsApp</p>
@@ -146,13 +173,17 @@ export default function ContactSection({ onEnquire }) {
 
               {submitted ? (
                 <div className="text-center py-8">
-                  <div className="text-5xl mb-4">✅</div>
+                  <FaCheckCircle className="text-gold text-5xl mx-auto mb-4" />
                   <h5 className="font-playfair text-xl font-bold text-navy mb-2">
-                    Thank You!
+                    Thank You, {form.name}!
                   </h5>
-                  <p className="text-gray-500 text-sm">
-                    Our team will contact you shortly.
+                  <p className="text-gray-500 text-sm mb-4">
+                    Your enquiry has been received. Our team will contact you shortly.
                   </p>
+                  <div className="flex flex-col items-center gap-2 text-xs text-gray-500">
+                    <p className="flex items-center gap-1.5"><FaEnvelope className="text-gold" /> Confirmation sent to <strong>{form.email}</strong></p>
+                    <p className="flex items-center gap-1.5"><FaWhatsapp className="text-green-500" /> Our team has been notified on WhatsApp</p>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate>
@@ -240,8 +271,25 @@ export default function ContactSection({ onEnquire }) {
                       </p>
                     )}
 
-                    <button type="submit" className="btn-gold w-full text-center py-3">
-                      Submit Enquiry
+                    {apiError && (
+                      <p className="text-red-500 text-xs text-center py-2 bg-red-50 rounded-lg flex items-center justify-center gap-1.5" role="alert">
+                        <FaExclamationTriangle /> {apiError}
+                      </p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="btn-gold w-full text-center py-3 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {loading ? (
+                        <>
+                          <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        "Submit Enquiry"
+                      )}
                     </button>
                   </div>
                 </form>

@@ -1,4 +1,5 @@
 "use client";
+import { FaPhone, FaEnvelope, FaDownload } from "react-icons/fa";
 
 export function MobileStickyBar({ onEnquire }) {
   return (
@@ -12,7 +13,7 @@ export function MobileStickyBar({ onEnquire }) {
         style={{ background: "var(--navy)" }}
         aria-label="Call Now"
       >
-        <span>📞</span>
+        <FaPhone size={14} />
         CALL NOW
       </a>
       <div className="w-px bg-white/20" />
@@ -22,7 +23,7 @@ export function MobileStickyBar({ onEnquire }) {
         style={{ background: "var(--gold)" }}
         aria-label="Enquire Now"
       >
-        <span>✉️</span>
+        <FaEnvelope size={14} />
         ENQUIRE NOW
       </button>
     </div>
@@ -33,7 +34,7 @@ export function FloatingSideButton({ onBrochure }) {
   return (
     <button
       onClick={onBrochure}
-      className="hidden md:flex fixed right-0 top-1/2 z-30 items-center justify-center text-white text-xs font-semibold tracking-wide px-4 py-2 rounded-l-lg shadow-lg"
+      className="hidden md:flex fixed right-0 top-1/2 z-30 items-center justify-center gap-2 text-white text-xs font-semibold tracking-wide px-4 py-2 rounded-l-lg shadow-lg"
       style={{
         background: "var(--gold)",
         transform: "translateY(-50%) translateX(calc(100% - 36px)) rotate(90deg)",
@@ -43,6 +44,7 @@ export function FloatingSideButton({ onBrochure }) {
       }}
       aria-label="Download brochure"
     >
+      <FaDownload size={12} />
       Download Brochure
     </button>
   );

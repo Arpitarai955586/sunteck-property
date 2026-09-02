@@ -1,10 +1,14 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { HiX as CloseIcon } from "react-icons/hi";
+import { FaCheckCircle, FaEnvelope, FaWhatsapp, FaExclamationTriangle } from "react-icons/fa";
 
 function LeadForm({ onClose, source }) {
   const [form, setForm] = useState({ name: "", mobile: "", email: "", consent: true });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const validate = () => {
     const e = {};
@@ -15,13 +19,31 @@ function LeadForm({ onClose, source }) {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setErrors({});
-    setSubmitted(true);
-    setTimeout(onClose, 3000);
+    setApiError("");
+    setLoading(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name, mobile: form.mobile, email: form.email, source }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+        setTimeout(onClose, 3500);
+      } else {
+        setApiError(data.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setApiError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (field, value) => {
@@ -32,9 +54,13 @@ function LeadForm({ onClose, source }) {
   if (submitted) {
     return (
       <div className="text-center py-6">
-        <div className="text-5xl mb-3">🎉</div>
-        <h5 className="font-playfair text-xl font-bold text-navy mb-2">Thank You!</h5>
-        <p className="text-gray-500 text-sm">Our team will contact you shortly.</p>
+        <FaCheckCircle className="text-gold text-5xl mx-auto mb-3" />
+        <h5 className="font-playfair text-xl font-bold text-navy mb-2">Thank You, {form.name}!</h5>
+        <p className="text-gray-500 text-sm mb-2">Our team will contact you shortly.</p>
+        <div className="flex flex-col items-center gap-1 text-xs text-gray-400">
+          <p className="flex items-center gap-1.5"><FaEnvelope className="text-gold" /> Notification sent to team</p>
+          <p className="flex items-center gap-1.5"><FaWhatsapp className="text-green-500" /> WhatsApp alert delivered</p>
+        </div>
       </div>
     );
   }
@@ -105,8 +131,23 @@ function LeadForm({ onClose, source }) {
         </div>
         {errors.consent && <p className="text-red-500 text-xs" role="alert">{errors.consent}</p>}
 
-        <button type="submit" className="btn-gold w-full py-3 text-center">
-          Submit
+        {apiError && (
+          <p className="text-red-500 text-xs text-center py-2 bg-red-50 rounded-lg flex items-center justify-center gap-1.5" role="alert">
+            <FaExclamationTriangle /> {apiError}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="btn-gold w-full py-3 text-center disabled:opacity-60 flex items-center justify-center gap-2"
+        >
+          {loading ? (
+            <>
+              <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Sending...
+            </>
+          ) : "Submit"}
         </button>
       </div>
     </form>
@@ -145,9 +186,9 @@ function Modal({ open, onClose, title, children }) {
           <button
             onClick={onClose}
             aria-label="Close modal"
-            className="text-white/70 hover:text-white text-2xl leading-none transition-colors ml-4"
+            className="text-white/70 hover:text-white transition-colors ml-4 p-1"
           >
-            ×
+            <CloseIcon size={20} />
           </button>
         </div>
         <div className="p-6">{children}</div>
@@ -234,11 +275,11 @@ export function LightboxModal({ open, onClose, src, alt }) {
       style={{ animation: "fadeIn 0.2s ease" }}
     >
       <button
-        className="absolute top-4 right-4 text-white text-3xl hover:text-gold transition-colors z-10"
+        className="absolute top-4 right-4 text-white hover:text-gold transition-colors z-10 p-2"
         onClick={onClose}
         aria-label="Close image viewer"
       >
-        ×
+        <CloseIcon size={32} />
       </button>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img

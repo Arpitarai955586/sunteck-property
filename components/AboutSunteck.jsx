@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { brandPortfolio } from "@/lib/data";
+import { FaBuilding, FaCity, FaChartLine, FaKey } from "react-icons/fa";
 
 export default function AboutSunteck() {
   const sectionRef = useRef(null);
@@ -34,17 +35,17 @@ export default function AboutSunteck() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 reveal">
           {[
-            { icon: "🏢", label: "50+ Million Sq. Ft.", sub: "Portfolio" },
-            { icon: "🏙️", label: "30+ Developments", sub: "Landmark Projects" },
-            { icon: "📈", label: "NSE & BSE Listed", sub: "Trusted Developer" },
-            { icon: "🔑", label: "3400+ Homes", sub: "Successfully Delivered" },
+            { icon: <FaBuilding className="text-gold text-3xl" />, label: "50+ Million Sq. Ft.", sub: "Portfolio" },
+            { icon: <FaCity className="text-gold text-3xl" />, label: "30+ Developments", sub: "Landmark Projects" },
+            { icon: <FaChartLine className="text-gold text-3xl" />, label: "NSE & BSE Listed", sub: "Trusted Developer" },
+            { icon: <FaKey className="text-gold text-3xl" />, label: "3400+ Homes", sub: "Successfully Delivered" },
           ].map((stat, i) => (
             <div
               key={i}
               className="flex flex-col items-center gap-2 p-5 rounded-2xl border border-gray-100 hover:border-gold/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-zoom"
               style={{ transitionDelay: `${i * 100}ms` }}
             >
-              <span className="text-4xl">{stat.icon}</span>
+              {stat.icon}
               <p className="font-playfair font-bold text-navy text-lg text-center leading-tight">
                 {stat.label}
               </p>
@@ -62,12 +63,12 @@ export default function AboutSunteck() {
         <div className="head-line reveal" />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Map image */}
+          {/* Left: Unique Image */}
           <div className="reveal-left">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-square">
               <Image
-                src="/images/highlight.jpg"
-                alt="Sunteck Realty Portfolio Map"
+                src="/images/elevation2.jpg"
+                alt="Sunteck Realty Portfolio"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 1024px) 100vw, 50vw"

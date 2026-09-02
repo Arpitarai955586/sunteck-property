@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
 import { disclaimerText } from "@/lib/data";
+import { FaPhone, FaWhatsapp } from "react-icons/fa";
 
 export default function Footer({ onDisclaimer }) {
   return (
@@ -61,8 +61,8 @@ export default function Footer({ onDisclaimer }) {
           <div className="text-center md:text-right">
             <div className="space-y-2 text-sm text-white/60 mb-4">
               <p>
-                <a href="tel:02265911830" className="hover:text-gold transition-colors">
-                  📞 022-65911830
+                <a href="tel:02265911830" className="inline-flex items-center gap-2 hover:text-gold transition-colors justify-center md:justify-end">
+                  <FaPhone size={14} className="text-gold" /> 022-65911830
                 </a>
               </p>
               <p>
@@ -70,9 +70,9 @@ export default function Footer({ onDisclaimer }) {
                   href="https://wa.link/j4b7tq"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-gold transition-colors"
+                  className="inline-flex items-center gap-2 hover:text-gold transition-colors justify-center md:justify-end"
                 >
-                  💬 +91 8451058354
+                  <FaWhatsapp size={16} className="text-green-500" /> +91 9555867165
                 </a>
               </p>
             </div>
@@ -98,16 +98,3 @@ export default function Footer({ onDisclaimer }) {
     </footer>
   );
 }
-
-// export function DisclaimerStrip() {
-//   return (
-//     <section className="bg-gray-50 py-4 px-4">
-//       <div className="max-w-6xl mx-auto">
-//         <p className="text-xs text-gray-500 leading-relaxed text-center">
-//           {disclaimerText.substring(0, 200)}...{" "}
-//           <span className="text-gold font-medium">*Terms & Conditions Apply.</span>
-//         </p>
-//       </div>
-//     </section>
-//   );
-// }

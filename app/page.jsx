@@ -58,8 +58,12 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="pb-16 md:pb-0">
+        {/* Scroll anchor for Home nav link */}
+        <div id="home" style={{ position: "absolute", top: 0 }} aria-hidden="true" />
+
         {/* Hero */}
         <HeroSlider onEnquire={() => setEnquireOpen(true)} />
+
 
         {/* Project Highlights */}
         <ProjectHighlights />

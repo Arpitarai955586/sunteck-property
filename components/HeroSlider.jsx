@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { heroSlides } from "@/lib/data";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function HeroSlider({ onEnquire }) {
   const [current, setCurrent] = useState(0);
@@ -90,16 +91,16 @@ export default function HeroSlider({ onEnquire }) {
       <button
         onClick={prev}
         aria-label="Previous slide"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm border border-white/30 text-white text-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center transition-all duration-200 hover:scale-110"
       >
-        ‹
+        <FaChevronLeft size={16} />
       </button>
       <button
         onClick={next}
         aria-label="Next slide"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm border border-white/30 text-white text-xl flex items-center justify-center transition-all duration-200 hover:scale-110"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center transition-all duration-200 hover:scale-110"
       >
-        ›
+        <FaChevronRight size={16} />
       </button>
 
       {/* Dots */}
