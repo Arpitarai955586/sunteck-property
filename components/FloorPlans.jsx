@@ -45,11 +45,11 @@ export default function FloorPlans({ onFloorClick }) {
       <div className="head-line reveal" />
 
       <div className="max-w-5xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           {floorPlans.map((plan, i) => (
             <div
               key={plan.id}
-              className="floor-card reveal-zoom"
+              className="floor-card reveal-zoom group flex flex-col"
               style={{ transitionDelay: `${i * 120}ms` }}
               onClick={onFloorClick}
               role="button"
@@ -57,12 +57,13 @@ export default function FloorPlans({ onFloorClick }) {
               onKeyDown={(e) => e.key === "Enter" && onFloorClick?.()}
               aria-label={`View ${plan.type} floor plan details`}
             >
-              <div className="relative w-full aspect-[4/3] bg-gray-100">
+              {/* Fixed height image area — same for both cards */}
+              <div className="relative w-full overflow-hidden" style={{ height: "300px" }}>
                 <Image
                   src={plan.src}
                   alt={`${plan.type} Floor Plan`}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
@@ -75,8 +76,8 @@ export default function FloorPlans({ onFloorClick }) {
                   {plan.type}
                 </h3>
               </div>
-              {/* Bottom label */}
-              <div className="p-4 bg-navy flex items-center justify-between">
+              {/* Bottom label — flex-grow so both cards stretch equally */}
+              <div className="p-4 bg-navy flex items-center justify-between flex-1">
                 <div>
                   <h4 className="font-playfair text-lg font-bold text-white">
                     {plan.type}

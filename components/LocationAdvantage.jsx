@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { locationPoints } from "@/lib/data";
-import { FaTrain, FaLink, FaSearchPlus } from "react-icons/fa";
+import { FaTrain, FaLink, FaExternalLinkAlt } from "react-icons/fa";
 
-export default function LocationAdvantage({ onLightbox }) {
+export default function LocationAdvantage() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -31,22 +30,32 @@ export default function LocationAdvantage({ onLightbox }) {
 
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 items-center">
-          {/* Left: Map image */}
+
+          {/* Left: Real Google Maps embed */}
           <div className="reveal-left">
-            <div
-              className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] cursor-zoom-in group"
-              onClick={() => onLightbox?.("/images/location.jpg", "Location Advantage Map")}
-              role="button" tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && onLightbox?.("/images/location.jpg")}
-              aria-label="View location map in full screen"
-            >
-              <Image src="/images/location.jpg" alt="Sunteck OneWorld Location Advantage Map" fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 1024px) 100vw, 60vw" />
-              <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/30 transition-all duration-300 flex items-center justify-center">
-                <FaSearchPlus size={36} className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{ height: "420px" }}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.5!2d72.8397!3d19.3654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7af1b1b1b1b1b%3A0x0!2sSunteck+OneWorld%2C+Naigaon+West%2C+Maharashtra!5e0!3m2!1sen!2sin!4v1"
+                width="100%"
+                height="100%"
+                style={{ border: 0, display: "block" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Sunteck OneWorld – Naigaon West Location"
+              />
             </div>
+            {/* Open in Maps button below iframe */}
+            <a
+              href="https://www.google.com/maps/search/Sunteck+OneWorld+Naigaon+West/@19.3654,72.8422,16z"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-white px-4 py-2 rounded-lg"
+              style={{ background: "var(--navy)" }}
+            >
+              <FaExternalLinkAlt size={11} />
+              Open in Google Maps
+            </a>
           </div>
 
           {/* Right: Distance list */}
@@ -71,10 +80,19 @@ export default function LocationAdvantage({ onLightbox }) {
             </div>
 
             <div className="mt-6 p-4 rounded-xl bg-navy text-white text-sm">
-              <p className="font-semibold text-gold mb-1">Naigaon East, Maharashtra</p>
+              <p className="font-semibold text-gold mb-1">Naigaon West, Maharashtra</p>
               <p className="text-white/70 text-xs leading-relaxed">
                 Naigaon enjoys excellent connectivity via railways, roadways, and upcoming metro infrastructure connecting it to the broader MMR region.
               </p>
+              <a
+                href="https://www.google.com/maps/search/Sunteck+OneWorld+Naigaon+West/@19.3654,72.8422,16z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-3 text-gold text-xs font-semibold hover:underline"
+              >
+                <FaLink size={11} />
+                View on Google Maps
+              </a>
             </div>
           </div>
         </div>

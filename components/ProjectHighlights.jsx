@@ -54,7 +54,7 @@ export default function ProjectHighlights() {
           <div className="reveal-left">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
               <Image src="/images/highlight.jpg" alt="Sunteck OneWorld – Project Highlight" fill className="object-cover hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 50vw" />
-              <div className="absolute top-4 left-4 bg-gold text-white text-xs font-bold px-3 py-1.5 rounded-full tracking-wide">150 Acres Township</div>
+              {/* <div className="absolute top-4 left-4 bg-gold text-white text-xs font-bold px-3 py-1.5 rounded-full tracking-wide"></div> */}
             </div>
           </div>
 

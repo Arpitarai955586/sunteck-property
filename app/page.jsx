@@ -78,7 +78,7 @@ export default function Home() {
         <Amenities />
 
         {/* Location Advantage */}
-        <LocationAdvantage onLightbox={openLightbox} />
+        <LocationAdvantage />
 
         {/* Gallery */}
         <Gallery onLightbox={openLightbox} />
@@ -99,7 +99,7 @@ export default function Home() {
 
       {/* Floating CTAs */}
       <MobileStickyBar onEnquire={() => setEnquireOpen(true)} />
-      <FloatingSideButton onBrochure={() => setBrochureOpen(true)} />
+      <FloatingSideButton />
     </>
   );
 }

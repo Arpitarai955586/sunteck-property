@@ -72,7 +72,7 @@ export default function Footer({ onDisclaimer }) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 hover:text-gold transition-colors justify-center md:justify-end"
                 >
-                  <FaWhatsapp size={16} className="text-green-500" /> +91 9555867165
+                  <FaWhatsapp size={16} className="text-green-500" /> +91 7276622755
                 </a>
               </p>
             </div>

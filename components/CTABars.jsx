@@ -1,5 +1,6 @@
 "use client";
-import { FaPhone, FaEnvelope, FaDownload } from "react-icons/fa";
+import { FaPhone, FaEnvelope } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 
 export function MobileStickyBar({ onEnquire }) {
   return (
@@ -30,22 +31,28 @@ export function MobileStickyBar({ onEnquire }) {
   );
 }
 
-export function FloatingSideButton({ onBrochure }) {
+export function FloatingSideButton() {
+  const whatsappNumber = "917276622755";
+  const whatsappMessage = encodeURIComponent(
+    "Hello! I am interested in Sunteck OneWorld. Please share more details."
+  );
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
   return (
-    <button
-      onClick={onBrochure}
-      className="hidden md:flex fixed right-0 top-1/2 z-30 items-center justify-center gap-2 text-white text-xs font-semibold tracking-wide px-4 py-2 rounded-l-lg shadow-lg"
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full shadow-2xl transition-transform duration-300 hover:scale-110"
       style={{
-        background: "var(--gold)",
-        transform: "translateY(-50%) translateX(calc(100% - 36px)) rotate(90deg)",
-        transformOrigin: "left center",
-        writingMode: "horizontal-tb",
-        width: "160px",
+        background: "#25D366",
+        width: "60px",
+        height: "60px",
+        boxShadow: "0 4px 20px rgba(37,211,102,0.5)",
       }}
-      aria-label="Download brochure"
+      aria-label="Chat on WhatsApp"
     >
-      <FaDownload size={12} />
-      Download Brochure
-    </button>
+      <FaWhatsapp size={32} color="white" />
+    </a>
   );
 }
