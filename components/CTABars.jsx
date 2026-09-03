@@ -35,18 +35,20 @@ export function BrochureSideButton({ onBrochure }) {
   return (
     <button
       onClick={onBrochure}
-      className="hidden md:flex fixed right-0 top-1/2 z-30 items-center justify-center gap-2 text-white text-xs font-semibold tracking-wide px-4 py-2 rounded-l-lg shadow-lg"
+      className="fixed right-6 z-50 flex flex-col items-center justify-center rounded-full shadow-2xl transition-transform duration-300 hover:scale-110"
       style={{
         background: "var(--gold)",
-        transform: "translateY(-50%) translateX(calc(100% - 36px)) rotate(90deg)",
-        transformOrigin: "left center",
-        writingMode: "horizontal-tb",
-        width: "160px",
+        width: "60px",
+        height: "60px",
+        bottom: "140px",
+        boxShadow: "0 4px 20px rgba(184,134,11,0.5)",
       }}
       aria-label="Download brochure"
     >
-      <FaDownload size={12} />
-      Download Brochure
+      <FaDownload size={20} color="white" />
+      <span style={{ fontSize: "8px", color: "white", fontWeight: 700, marginTop: "3px", lineHeight: 1, textAlign: "center" }}>
+        Brochure
+      </span>
     </button>
   );
 }
